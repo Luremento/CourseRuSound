@@ -60,7 +60,7 @@
                             </a>
                         </p>
                         <div class="flex justify-between items-center">
-                            {{ $item->comment }}
+                            <p class="truncate">{{ $item->comment }}</p>
                             @if (Auth::id() == $item->user->id || Auth::id() == $track->user->id)
                                 <form action={{ route('DeleteComm') }} method="POST" class="hidden">
                                     <input type="text" name="comment_id" id="comment_id" class=""

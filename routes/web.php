@@ -15,21 +15,26 @@ Route::get('/upload', function () {
 
 Route::post('/new_music', [MusicController::class, 'New_Music'])->name('NewMusic')->middleware('auth');
 
-Route::post('/new/albom', [MusicController::class, 'New_Albom'])->name('NewAlbom')->middleware('auth');
-
 Route::get('/track/{id}', [MusicController::class, 'index'])->name('ShawTrack');
-
-Route::get('/albom/{id}', [TrackController::class, 'show_albom'])->name('ShawAlbom');
 
 Route::post('/like', [LikeController::class, 'store'])->name('like.add')->middleware('auth');
 
 Route::post('/new_comment/{id}', [CommentController::class, 'new_comment'])->name('NewComment')->middleware('auth');
 
-Route::post('/albom/new_track/{albom_id}', [App\Http\Controllers\TrackController::class, 'new_track_in_albom'])->name('NewTrackinAlbom')->middleware('auth');
-
+Route::get('/del_track/{track_id}', [App\Http\Controllers\TrackController::class, 'delete_track'])->name('deleteTrack')->middleware('auth');
+# НЕ делал еще
 Route::get('/del_comment', [CommentController::class, 'delete_comment'])->name('DeleteComm')->middleware('auth');
 
-Route::get('/del_track/{track_id}', [App\Http\Controllers\TrackController::class, 'delete_track'])->name('deleteTrack')->middleware('auth');
+Route::post('/new/albom', [MusicController::class, 'New_Albom'])->name('NewAlbom')->middleware('auth');
+
+
+Route::get('/albom/{id}', [TrackController::class, 'show_albom'])->name('ShawAlbom');
+
+
+
+Route::post('/albom/new_track/{albom_id}', [App\Http\Controllers\TrackController::class, 'new_track_in_albom'])->name('NewTrackinAlbom')->middleware('auth');
+
+
 
 Route::get('/del_albom/{albom_id}', [App\Http\Controllers\TrackController::class, 'delete_albom'])->name('deleteAlbom')->middleware('auth');
 
@@ -38,4 +43,4 @@ Route::put('/new_avatar', [HomeController::class, 'avatar'])->name('NewAvatar')-
 Route::post('/search', [HomeController::class, 'search'])->name('search');
 
 
-require __DIR__.'/auth.php'; 
+require __DIR__.'/auth.php';
