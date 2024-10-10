@@ -3,9 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Albom;
+use Auth;
 
 class AlbomController extends Controller
 {
+    public function index() {
+        $alboms = Albom::where('user_id', Auth::id())->get();
+        return view('ShowAlboms', [
+            'alboms' => $alboms
+        ]);
+    }
+
     public function New_Albom(Request $request)
     {
         $validatedData = $request->validate([

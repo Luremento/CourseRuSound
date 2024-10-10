@@ -3,7 +3,7 @@
         <div class="flex gap-x-12 text-nowrap">
             <a href={{ route('index') }} class="text-sm font-semibold leading-6 text-gray-900">Главная</a>
             <a href={{ route('track.upload') }} class="text-sm font-semibold leading-6 text-gray-900">Загрузить трек</a>
-            <a href="#" class="text-sm font-semibold leading-6 text-gray-900">Альбомы</a>
+            <a href={{ route('alboms') }} class="text-sm font-semibold leading-6 text-gray-900">Альбомы</a>
         </div>
         <div class="flex flex-1 justify-end max-sm:hidden">
             @guest
