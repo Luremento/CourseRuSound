@@ -16,6 +16,7 @@
                                 @component('components.Card', [
                                     'track' => $track,
                                     'artist' => $track->user,
+                                    'type' => 'track',
                                 ])
                                 @endcomponent
                             @endforeach
@@ -88,6 +89,7 @@
                                 @component('components.Card', [
                                     'track' => $track,
                                     'artist' => $track->user,
+                                    'type' => 'albom',
                                 ])
                                 @endcomponent
                             @endforeach

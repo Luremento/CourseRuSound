@@ -9,11 +9,13 @@
             <div class="col-span-4 sm:col-span-9">
                 <div class="bg-white shadow rounded-lg p-6">
 
-                    <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
+                    {{-- <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
                         class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                         type="button">
                         Добавить альбом
-                    </button>
+                    </button> --}}
+                    <x-primary-button data-modal-target="authentication-modal"
+                        data-modal-toggle="authentication-modal">Добавить альбом</x-primary-button>
 
                     <!-- Main modal -->
                     <div id="authentication-modal" tabindex="-1" aria-hidden="true"
@@ -39,43 +41,28 @@
                                 </div>
                                 <!-- Modal body -->
                                 <div class="p-4 md:p-5">
-                                    <form class="space-y-4" action="#">
+                                    <form class="space-y-4" enctype="multipart/form-data" action={{ route('NewAlbom') }}
+                                        method="POST">
+                                        @csrf
                                         <div>
-                                            <label for="email"
-                                                class="block mb-2 text-sm font-medium text-gray-900">Название
-                                                альбома</label>
-                                            <input type="text" name="name" id="name"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                                placeholder="name@company.com" required />
-                                        </div>
-                                        <div>
-                                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Your
-                                                password</label>
-                                            <input type="password" name="password" id="password" placeholder="••••••••"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                                required />
-                                        </div>
-                                        <div class="flex justify-between">
-                                            <div class="flex items-start">
-                                                <div class="flex items-center h-5">
-                                                    <input id="remember" type="checkbox" value=""
-                                                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300"
-                                                        required />
-                                                </div>
-                                                <label for="remember"
-                                                    class="ms-2 text-sm font-medium text-gray-900">Remember
-                                                    me</label>
+                                            <div class="mb-4">
+                                                <label for="cover"
+                                                    class="block mb-2 text-sm font-medium text-gray-900">Название
+                                                    альбома</label>
+                                                <input type="text" name="name" id="name"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                                    required />
                                             </div>
-                                            <a href="#" class="text-sm text-blue-700 hover:underline">Lost
-                                                Password?</a>
+                                            <div class="mb-4">
+                                                <label for="cover"
+                                                    class="block mb-2 text-sm font-medium text-gray-900">Обложка</label>
+                                                <input type="file"
+                                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                    id="cover" name="cover">
+                                            </div>
                                         </div>
                                         <button type="submit"
-                                            class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Login
-                                            to your account</button>
-                                        <div class="text-sm font-medium text-gray-500">
-                                            Not registered? <a href="#" class="text-blue-700 hover:underline">Create
-                                                account</a>
-                                        </div>
+                                            class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Создать</button>
                                     </form>
                                 </div>
                             </div>

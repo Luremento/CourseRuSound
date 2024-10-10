@@ -28,7 +28,7 @@
                 </div>
                 <a href="{{ route('profile', ['user_id' => $track->user->id]) }}"
                     class="text-md font-bold mb-4 underline">{{ $track->user->name }}</a>
-                @if ($track->user_id == Auth::user()->id or Auth::user()->is_admin == 1)
+                @if (Auth::user() && ($track->user_id == Auth::user()->id or Auth::user()->is_admin == 1))
                     <a href="{{ route('deleteTrack', ['track_id' => $track->id]) }}"
                         class="btn-delete"><x-primary-button>Удалить</x-primary-button></a>
                 @endif
@@ -51,7 +51,7 @@
                         </div>
                     </form>
                 </div>
-                @foreach ($track->comment as $item)
+                @foreach ($track->comment->reverse() as $item)
                     <div class="flex text-gray-600 pt-3 flex-col border-b w-full">
                         <p class="pb-3 mb-0 small lh-sm w-full flex items-center gap-2">
                             <img class="w-10 h-10 rounded" src={{ asset('img/avatar_default.png') }} alt="Default avatar" <a
@@ -61,12 +61,12 @@
                         </p>
                         <div class="flex justify-between items-center">
                             <p class="truncate">{{ $item->comment }}</p>
-                            @if (Auth::id() == $item->user->id || Auth::id() == $track->user->id)
+                            @if (Auth::user() && (Auth::id() == $item->user->id || Auth::id() == $track->user->id || Auth::user()->is_admin == 1))
                                 <form action={{ route('DeleteComm') }} method="POST" class="hidden">
                                     <input type="text" name="comment_id" id="comment_id" class=""
                                         value={{ $item->id }} class="hidden">
-                                    <x-primary-button type="submit" class="w-min ">Удалить</x-primary-button>
                                 </form>
+                                <x-primary-button type="submit" class="w-min mb-1">Удалить</x-primary-button>
                             @endif
                         </div>
                     </div>

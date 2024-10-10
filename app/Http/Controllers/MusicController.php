@@ -10,9 +10,11 @@ class MusicController extends Controller
 {
     public function index($id) {
         $like = null;
-        $liked = Like::where('track_id', $id)->where('user_id', Auth::user()->id)->first();
-        if ($liked) {
-            $like = $liked;
+        if (Auth::check()) {
+            $liked = Like::where('track_id', $id)->where('user_id', Auth::user()->id)->first();
+            if ($liked) {
+                $like = $liked;
+            }
         }
         return view('ShowTrack', [
             'track' => Track::with(['comment', 'user'])->where('id', $id)->first(),
@@ -57,23 +59,24 @@ class MusicController extends Controller
 
         return redirect()->route('ShawTrack', ['id' => $track]);
     }
-    // public function New_Albom(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'name' => 'required|string',
-    //         'cover' => 'required|image|mimes:jpg,png,jpeg,webp|max:8192'
-    //     ]);
 
-    //     $coverFile = $request->file('cover');
-    //     $timestamp = time();
-    //     $coverPath = $coverFile->storeAs('covers', $timestamp. '.'. $coverFile->getClientOriginalExtension(), 'public');
+    public function New_Albom(Request $request)
+    {
+        // Надо разобраться с валидацией
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'cover' => 'required|image|mimes:jpg,png,jpeg,webp'
+        ]);
+        $coverFile = $request->file('cover');
+        $timestamp = time();
+        $coverPath = $coverFile->storeAs('covers', $timestamp. '.'. $coverFile->getClientOriginalExtension(), 'public');
 
-    //     $data = [
-    //         'user_id' => Auth::user()->id,
-    //         'name' => $request->name,
-    //         'cover_file' => $coverPath
-    //     ];
-    //     Albom::create($data);
-    //     return redirect()->back();
-    // }
+        $data = [
+            'user_id' => Auth::id(),
+            'name' => $request->name,
+            'cover_file' => $coverPath
+        ];
+        Albom::create($data);
+        return redirect()->back();
+    }
 }
