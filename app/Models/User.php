@@ -74,4 +74,12 @@ class User extends Authenticatable
         return $this->hasMany(Albom::class);
     }
 
+    /*
+    * Связываем с таблицей views
+    */
+    public function views()
+    {
+        return $this->hasMany(View::class);
+    }
+
 }

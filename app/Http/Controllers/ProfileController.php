@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Log;
 
 class ProfileController extends Controller
 {
@@ -44,19 +45,24 @@ class ProfileController extends Controller
         ]);
 
         $user = User::where('id', Auth::user()->id)->first();
-        $photoPath = $user->photo;
+        $photoPath = public_path($user->photo); // Используем public_path для получения абсолютного пути
+
         if (file_exists($photoPath)) {
-            unlink($photoPath);
+            try {
+                unlink($photoPath);
+            } catch (\Throwable $th) {
+                Log::error("Ошибка при удалении фото: " . $photoPath);
+            }
         }
 
-        $name = time(). ".". $request->file('avatar_change')->extension();
-        $destination = 'public/avatars';
-        $path = $request->file('avatar_change')->storeAs($destination, $name);
+        $name = time() . '.' . $request->file('avatar_change')->extension();
+        $destination = 'avatars'; // Убираем 'public/' из пути
+        $path = $request->file('avatar_change')->storeAs($destination, $name, 'public'); // Используем 'public' диски
+
         User::where('id', Auth::user()->id)->update([
-            'photo' => 'storage/avatars/' . $name
+            'photo' => 'storage/avatars/' . $name // Путь к файлу в публичной директории
         ]);
 
         return redirect()->back();
     }
-
 }

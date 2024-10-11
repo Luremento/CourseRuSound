@@ -10,8 +10,8 @@
                 <div class="bg-white shadow rounded-lg p-6">
                     <div class="flex flex-col items-center">
                         @if ($user->photo)
-                            <img src={{ asset($user->photo) }} class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
-                            </img>
+                            <img src={{ asset($user->photo) }}
+                                class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"></img>
                         @else
                             <img src={{ asset('img/avatar_default.png') }}
                                 class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">

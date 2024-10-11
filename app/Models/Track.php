@@ -40,4 +40,12 @@ class Track extends Model
         return $this->hasMany(Like::class);
     }
 
+    /*
+    * Связываем с таблицей views
+    */
+    public function views()
+    {
+        return $this->hasMany(View::class);
+    }
+
 }

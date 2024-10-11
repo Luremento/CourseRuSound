@@ -27,7 +27,15 @@ Route::get('/del_track/{track_id}', [App\Http\Controllers\TrackController::class
 Route::post('/new/albom', [MusicController::class, 'New_Albom'])->name('NewAlbom')->middleware('auth');
 
 Route::post('/del_comment', [CommentController::class, 'delete_comment'])->name('DeleteComm')->middleware('auth');
+
+Route::controller(App\Http\Controllers\ProfileController::class)->group(function () {
+    Route::post('/new_avatar', 'update_avatar')->name('profile.update-photo');
+    Route::patch('/profile/update', 'update')->name('profile.update');
+    Route::delete('/profile/destroy','destroy')->name('profile.destroy');
+});
+
 # НЕ делал еще
+
 Route::get('/alboms', [AlbomController::class, 'index'])->name('alboms')->middleware('auth');
 Route::get('/albom/{id}', [TrackController::class, 'show_albom'])->name('ShawAlbom');
 Route::post('/albom/new_track/{albom_id}', [App\Http\Controllers\TrackController::class, 'new_track_in_albom'])->name('NewTrackinAlbom')->middleware('auth');
@@ -38,11 +46,6 @@ Route::post('/search', [HomeController::class, 'search'])->name('search');
 
 
 
-Route::controller(App\Http\Controllers\ProfileController::class)->group(function () {
-    Route::post('/new_avatar', 'update_avatar')->name('profile.update-photo');
-    Route::patch('/profile/update', 'update')->name('profile.update');
-    Route::delete('/profile/destroy','destroy')->name('profile.destroy');
-});
 
 
 require __DIR__.'/auth.php';

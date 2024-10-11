@@ -19,11 +19,20 @@ class Albom extends Model
         'name',
         'cover_file'
     ];
+
     /*
     * Связываем с таблицей users
     */
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    /*
+    * Связываем с таблицей views
+    */
+    public function views()
+    {
+        return $this->hasMany(View::class);
     }
 
 }

@@ -31,9 +31,14 @@
                 <div class="col-span-4 sm:col-span-3">
                     <div class="bg-white shadow rounded-lg p-6">
                         <div class="flex flex-col items-center">
-                            <img src={{ asset('img/avatar_default.png') }}
-                                class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
-                            </img>
+                            @if (Auth::user() && Auth::user()->photo)
+                                <img src={{ asset(Auth::user()->photo) }}
+                                    class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0"></img>
+                            @else
+                                <img src={{ asset('img/avatar_default.png') }}
+                                    class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
+                                </img>
+                            @endif
                         </div>
                         <div class="mt-6 flex flex-wrap gap-4 justify-center">
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
