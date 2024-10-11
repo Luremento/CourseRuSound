@@ -30,8 +30,9 @@
                     class="text-md font-bold underline">{{ $track->user->name }}</a>
                 <p class="text-lg font-bold mb-4">Жанр: {{ $track->genre }}</p>
                 @if (Auth::user() && ($track->user_id == Auth::user()->id or Auth::user()->is_admin == 1))
-                    <a href="{{ route('deleteTrack', ['track_id' => $track->id]) }}"
-                        class="btn-delete"><x-primary-button>Удалить</x-primary-button></a>
+                    <x-primary-button
+                        onclick="event.preventDefault();
+                                              document.getElementById('delete-track').submit();">Удалить</x-primary-button>
                 @endif
             </div>
             <div class="flex justify-betweene gap-5 w-full">
@@ -80,6 +81,13 @@
     </div>
 @endsection
 
+
+<form id="delete-track" action="{{ route('deleteTrack') }}" method="POST"
+    style="position: absolute; left: -1000px; top: -1000px;">
+    @csrf
+    @method('DELETE')
+    <input type="text" name="track_id" id="track_id" value={{ $track->id }}>
+</form>
 
 <form id="liked-form" action="{{ route('like.add') }}" method="POST"
     style="position: absolute; left: -1000px; top: -1000px;">

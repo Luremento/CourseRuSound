@@ -34,6 +34,7 @@ class AlbomController extends Controller
         Albom::create($data);
         return redirect()->back();
     }
+
     public function delete_albom($albom_id)
     {
         Albom::where('id', $albom_id)->delete();

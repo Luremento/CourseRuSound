@@ -61,7 +61,9 @@
                         </li>
                         @if (Auth::user() && (Auth::user()->is_admin == 1 || Auth::id() == $track->user->id))
                             <li>
-                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-red-700">Удалить</a>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-red-700"
+                                    onclick="event.preventDefault();
+                                              document.getElementById('delete-track').submit();">Удалить</a>
                             </li>
                         @endif
                         <li>
@@ -129,6 +131,14 @@
     <input type="hidden" name="albom_id" id="playlist_id_for_track">
     @csrf
 </form>
+
+<form id="delete-track" action="{{ route('deleteTrack') }}" method="POST"
+    style="position: absolute; left: -1000px; top: -1000px;">
+    @csrf
+    @method('DELETE')
+    <input type="text" name="track_id" id="track_id" value={{ $track->id }}>
+</form>
+
 
 <script>
     function addTrackToPlaylist(trackId, playlistId) {

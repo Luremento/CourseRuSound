@@ -105,10 +105,5 @@ class HomeController extends Controller
         }
         return redirect()->back();
     }
-    public function delete_track($track_id)
-    {
-        Track::where('id', $track_id)->delete();
-        return view('home', ['tracks' => Track::where('user_id', Auth::user()->id)->get(), 'alboms'=>Albom::with(['user'])->where('user_id', Auth::user()->id)->get(), 'user' => $user = Auth::user()]);
-    }
 
 }

@@ -67,23 +67,13 @@ class MusicController extends Controller
         return redirect()->route('ShawTrack', ['id' => $track]);
     }
 
-    public function New_Albom(Request $request)
+    public function delete_track(Request $request)
     {
-        // Надо разобраться с валидацией
         $validatedData = $request->validate([
-            'name' => 'required|string',
-            'cover' => 'required|image|mimes:jpg,png,jpeg,webp'
+            'track_id' => 'required|integer|min:1',
         ]);
-        $coverFile = $request->file('cover');
-        $timestamp = time();
-        $coverPath = $coverFile->storeAs('covers', $timestamp. '.'. $coverFile->getClientOriginalExtension(), 'public');
 
-        $data = [
-            'user_id' => Auth::id(),
-            'name' => $request->name,
-            'cover_file' => $coverPath
-        ];
-        Albom::create($data);
-        return redirect()->back();
+        Track::where('id', $request->track_id)->delete();
+        return redirect(route('index'));
     }
 }

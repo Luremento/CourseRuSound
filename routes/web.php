@@ -22,9 +22,9 @@ Route::post('/like', [LikeController::class, 'store'])->name('like.add')->middle
 
 Route::post('/new_comment/{id}', [CommentController::class, 'new_comment'])->name('NewComment')->middleware('auth');
 
-Route::delete('/del_track/{track_id}', [App\Http\Controllers\TrackController::class, 'delete_track'])->name('deleteTrack')->middleware('auth');
+Route::delete('/del_track', [MusicController::class, 'delete_track'])->name('deleteTrack')->middleware('auth');
 
-Route::post('/new/playlist', [MusicController::class, 'New_Albom'])->name('NewAlbom')->middleware('auth');
+Route::post('/new/playlist', [AlbomController::class, 'New_Albom'])->name('NewAlbom')->middleware('auth');
 
 Route::post('/del_comment', [CommentController::class, 'delete_comment'])->name('DeleteComm')->middleware('auth');
 
