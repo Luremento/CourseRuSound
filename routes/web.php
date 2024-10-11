@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{MusicController, CommentController,
-    LikeController, AlbomController, ProfileController};
+    LikeController, AlbomController, ProfileController, HomeController};
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
@@ -12,7 +12,7 @@ Route::get('/upload', function () {
     return view('UploadTrack');
 })->middleware('auth')->name('track.upload');
 
-Route::get('/profile/{user_id?}', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile')->middleware('auth');
+Route::get('/profile/{user_id?}', [HomeController::class, 'profile'])->name('profile')->middleware('auth');
 
 Route::post('/new_music', [MusicController::class, 'New_Music'])->name('NewMusic')->middleware('auth');
 
@@ -22,9 +22,9 @@ Route::post('/like', [LikeController::class, 'store'])->name('like.add')->middle
 
 Route::post('/new_comment/{id}', [CommentController::class, 'new_comment'])->name('NewComment')->middleware('auth');
 
-Route::get('/del_track/{track_id}', [App\Http\Controllers\TrackController::class, 'delete_track'])->name('deleteTrack')->middleware('auth');
+Route::delete('/del_track/{track_id}', [App\Http\Controllers\TrackController::class, 'delete_track'])->name('deleteTrack')->middleware('auth');
 
-Route::post('/new/albom', [MusicController::class, 'New_Albom'])->name('NewAlbom')->middleware('auth');
+Route::post('/new/playlist', [MusicController::class, 'New_Albom'])->name('NewAlbom')->middleware('auth');
 
 Route::post('/del_comment', [CommentController::class, 'delete_comment'])->name('DeleteComm')->middleware('auth');
 
@@ -34,12 +34,13 @@ Route::controller(App\Http\Controllers\ProfileController::class)->group(function
     Route::delete('/profile/destroy','destroy')->name('profile.destroy');
 });
 
-Route::get('/albom/{id}', [AlbomController::class, 'show_albom'])->name('ShawAlbom');
-Route::post('/albom/new_track', [App\Http\Controllers\TrackController::class, 'new_track_in_albom'])->name('NewTrackinAlbom')->middleware('auth');
+Route::post('/playlist/new_track', [AlbomController::class, 'new_track_in_albom'])->name('addTrackToPlaylist')->middleware('auth');
+Route::get('/playlist/{id}', [AlbomController::class, 'show_albom'])->name('ShawAlbom');
+
+Route::get('/playlist', [AlbomController::class, 'index'])->name('alboms')->middleware('auth');
 # НЕ делал еще
 
-Route::get('/alboms', [AlbomController::class, 'index'])->name('alboms')->middleware('auth');
-Route::get('/del_albom/{albom_id}', [App\Http\Controllers\TrackController::class, 'delete_albom'])->name('deleteAlbom')->middleware('auth');
+Route::get('/del_playlist/{albom_id}', [App\Http\Controllers\TrackController::class, 'delete_albom'])->name('deleteAlbom')->middleware('auth');
 
 
 Route::post('/search', [HomeController::class, 'search'])->name('search');

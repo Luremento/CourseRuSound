@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Albom, Like};
+use App\Models\{Albom, Like, Track};
 use Auth;
 
 class AlbomController extends Controller
@@ -44,7 +44,13 @@ class AlbomController extends Controller
     {
         $newTrack = Like::with('track')->where('user_id', Auth::user()->id)->get();
         $albom = Albom::with('user')->where('id', $id)->first();
-        $track_ids = $albom->music;
+
+        // Проверяем, является ли $track_ids строкой и преобразуем её в массив
+        if (is_string($albom->music)) {
+            $track_ids = json_decode($albom->music, true); // Предполагаем, что $track_ids хранится как JSON
+        } else {
+            $track_ids = $albom->music; // Если это уже массив или коллекция, просто используем его
+        }
 
         if (!empty($track_ids)){
             $tracks = Track::whereIn('id', $track_ids)->get();
@@ -55,22 +61,25 @@ class AlbomController extends Controller
         return view('showAlbom', ['albom' => $albom, 'newTrack' => $newTrack, 'tracks' => $tracks]);
     }
 
-    public function new_track_in_albom($albom_id, Request $request)
+    public function new_track_in_albom(Request $request)
     {
-        $album = Albom::find($albom_id);
+        $trackId = $request->track_id;
+        $albomId = $request->albom_id;
 
-        $track_id = $request->input('track_id');
+        // Найти альбом по ID
+        $albom = Albom::findOrFail($albomId);
 
-        if (in_array($track_id, $album->music ?? [])) {
-            // Track ID already exists in the album's music array
-            return redirect()->back()->with('error', 'Track already exists in the album');
-        }
+        // Получить текущий JSON-массив из поля music
+        $music = $albom->music ? json_decode($albom->music, true) : [];
 
-        $music = $album->music?: [];
-        $music[] = $track_id;
-        $album->setAttribute('music', $music);
-        $album->save();
-        return redirect()->back()->with('success', 'Track added to the album');
+        // Добавить новый трек в массив
+        $music[] = $trackId;
+
+        // Обновить поле music в базе данных
+        $albom->music = json_encode($music);
+        $albom->save();
+
+        return redirect(route('index'));
     }
 
 }

@@ -49,40 +49,46 @@
                 <!-- Dropdown menu -->
                 <div id="dropdown-{{ $track->id }}"
                     class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-2/4 left-2/3 mt-2">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
-                        aria-labelledby="dropdownDefaultButton-{{ $track->id }}">
+                    <ul class="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton-{{ $track->id }}">
                         <li>
                             @if ($type == 'albom')
                                 <a href={{ route('ShawAlbom', ['id' => $track->id]) }}
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:text-white">Открыть</a>
+                                    class="block px-4 py-2 hover:bg-gray-100">Открыть</a>
                             @else
                                 <a href={{ route('ShawTrack', ['id' => $track->id]) }}
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:text-white">Открыть</a>
+                                    class="block px-4 py-2 hover:bg-gray-100">Открыть</a>
                             @endif
                         </li>
                         @if (Auth::user() && (Auth::user()->is_admin == 1 || Auth::id() == $track->user->id))
                             <li>
-                                <a href="#"
-                                    class="block px-4 py-2 hover:bg-gray-100 dark:hover:text-white text-red-700">Удалить</a>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100 text-red-700">Удалить</a>
                             </li>
                         @endif
                         <li>
                             <button id="add-to-playlist-button-{{ $track->id }}"
-                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:text-white"
+                                class="block px-4 py-2 hover:bg-gray-100"
                                 onclick="event.preventDefault(); togglePlaylistDropdown('playlist-dropdown-{{ $track->id }}')">
                                 Добавить в плейлист
                             </button>
                             <!-- Playlist dropdown menu -->
                             <div id="playlist-dropdown-{{ $track->id }}"
                                 class="z-20 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-2/4 left-full mt-2">
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                <ul class="py-2 text-sm text-gray-700"
                                     aria-labelledby="add-to-playlist-button-{{ $track->id }}">
-                                    @foreach ($myPlaylists as $playlist)
-                                        <li>
-                                            <a href="#"
-                                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:text-white">{{ $playlist->name }}</a>
-                                        </li>
-                                    @endforeach
+                                    <li>
+                                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Добавить
+                                            плейлист</a>
+                                    </li>
+                                    @if (isset($myPlaylists) && $myPlaylists->count() > 0)
+                                        @foreach ($myPlaylists as $playlist)
+                                            <li>
+                                                <a class="block px-4 py-2 hover:bg-gray-100"
+                                                    onclick="event.preventDefault(); addTrackToPlaylist({{ $track->id }}, {{ $playlist->id }})">{{ $playlist->name }}</a>
+                                            </li>
+                                        @endforeach
+                                    @else
+                                        <li>No playlists available.</li>
+                                    @endif
                                 </ul>
                             </div>
                         </li>
@@ -117,7 +123,20 @@
     @csrf
 </form>
 
+<form id="add-track-to-playlist-form" action="{{ route('addTrackToPlaylist') }}" method="POST"
+    style="position: absolute; left: -1000px; top: -1000px;">
+    <input type="hidden" name="track_id" id="track_id_for_playlist">
+    <input type="hidden" name="albom_id" id="playlist_id_for_track">
+    @csrf
+</form>
+
 <script>
+    function addTrackToPlaylist(trackId, playlistId) {
+        document.getElementById('track_id_for_playlist').value = trackId;
+        document.getElementById('playlist_id_for_track').value = playlistId;
+        document.getElementById('add-track-to-playlist-form').submit();
+    }
+
     function likeTrack(trackId) {
         document.getElementById('track_id').value = trackId;
         document.getElementById('liked-form').submit();
