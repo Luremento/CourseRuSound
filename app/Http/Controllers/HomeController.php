@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Track, Like, Albom, User};
+use App\Models\{Track, Like, Albom, User, view};
 use Auth;
 
 class HomeController extends Controller
@@ -28,10 +28,28 @@ class HomeController extends Controller
         if ($user_id == null) {
             $user_id = Auth::id();
         }
+
         $tracks = Track::where('user_id', $user_id)->get();
-        $albom = Albom::with(['user'])->where('user_id', $user_id)->get();
+        $alboms = Albom::with(['user'])->where('user_id', $user_id)->get();
         $user = User::where('id', $user_id)->first();
-        return view('profile', ['tracks' => $tracks, 'alboms' => $albom, 'user' => $user]);
+
+        // Получаем популярные треки
+        $popular_track_ids = View::select('track_id')
+            ->where('user_id', $user_id)
+            ->groupBy('track_id')
+            ->orderByRaw('COUNT(*) DESC')
+            ->take(5)
+            ->pluck('track_id')
+            ->toArray();
+
+        $popular_tracks = Track::whereIn('id', $popular_track_ids)->get();
+
+        return view('profile', [
+            'tracks' => $tracks,
+            'alboms' => $alboms,
+            'user' => $user,
+            'popular_tracks' => $popular_tracks
+        ]);
     }
 
 

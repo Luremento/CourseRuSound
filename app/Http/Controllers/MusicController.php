@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Track, Albom, Like};
+use App\Models\{Track, Albom, Like, View};
 use Illuminate\Support\Facades\Auth;
 
 class MusicController extends Controller
@@ -14,6 +14,13 @@ class MusicController extends Controller
             $liked = Like::where('track_id', $id)->where('user_id', Auth::user()->id)->first();
             if ($liked) {
                 $like = $liked;
+            }
+            $views = View::where('user_id', Auth::user()->id)->where('track_id', $id)->first();
+            if (!$views) {
+                View::create([
+                    'user_id' => Auth::user()->id,
+                    'track_id' => $id
+                ]);
             }
         }
         return view('ShowTrack', [

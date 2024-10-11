@@ -35,31 +35,13 @@
                     <div class="flex flex-col">
                         <span class="text-gray-700 uppercase font-bold tracking-wider mb-2">Популярные треки</span>
                         <ul>
-                            <li
-                                class="mb-2 flex items-center gap-3 text-sm font-semibold leading-6 text-gray-900 border rounded p-1">
-                                <img class="w-10 h-10 rounded" src={{ asset('img/avatar_default.png') }}
-                                    alt="Default avatar">Название
-                            </li>
-                            <li
-                                class="mb-2 flex items-center gap-3 text-sm font-semibold leading-6 text-gray-900 border rounded p-1">
-                                <img class="w-10 h-10 rounded" src={{ asset('img/avatar_default.png') }}
-                                    alt="Default avatar">Название
-                            </li>
-                            <li
-                                class="mb-2 flex items-center gap-3 text-sm font-semibold leading-6 text-gray-900 border rounded p-1">
-                                <img class="w-10 h-10 rounded" src={{ asset('img/avatar_default.png') }}
-                                    alt="Default avatar">Название
-                            </li>
-                            <li
-                                class="mb-2 flex items-center gap-3 text-sm font-semibold leading-6 text-gray-900 border rounded p-1">
-                                <img class="w-10 h-10 rounded" src={{ asset('img/avatar_default.png') }}
-                                    alt="Default avatar">Название
-                            </li>
-                            <li
-                                class="mb-2 flex items-center gap-3 text-sm font-semibold leading-6 text-gray-900 border rounded p-1">
-                                <img class="w-10 h-10 rounded" src={{ asset('img/avatar_default.png') }}
-                                    alt="Default avatar">Название
-                            </li>
+                            @foreach ($popular_tracks as $popular)
+                                <li
+                                    class="mb-2 flex items-center gap-3 text-sm font-semibold leading-6 text-gray-900 border rounded p-1">
+                                    <img class="w-10 h-10 rounded" src={{ asset('storage/' . $popular->cover_file) }}
+                                        alt="Default avatar">{{ $popular->name }}
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
