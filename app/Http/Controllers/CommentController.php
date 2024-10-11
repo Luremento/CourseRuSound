@@ -24,7 +24,10 @@ class CommentController extends Controller
     }
 
     public function delete_comment(Request $request) {
-        
+        $validatedData = $request->validate([
+            'comment_id' => 'required|integer|min:1',
+        ]);
+
         Comment::where('id', $request->comment_id)->delete();
         return redirect()->back();
     }

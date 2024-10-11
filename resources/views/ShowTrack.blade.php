@@ -27,12 +27,12 @@
                     </button>
                 </div>
                 <a href="{{ route('profile', ['user_id' => $track->user->id]) }}"
-                    class="text-md font-bold mb-4 underline">{{ $track->user->name }}</a>
+                    class="text-md font-bold underline">{{ $track->user->name }}</a>
+                <p class="text-lg font-bold mb-4">Жанр: {{ $track->genre }}</p>
                 @if (Auth::user() && ($track->user_id == Auth::user()->id or Auth::user()->is_admin == 1))
                     <a href="{{ route('deleteTrack', ['track_id' => $track->id]) }}"
                         class="btn-delete"><x-primary-button>Удалить</x-primary-button></a>
                 @endif
-                <p class="text-lg font-bold mb-4">Жанр: {{ $track->genre }}</p>
             </div>
             <div class="flex justify-betweene gap-5 w-full">
                 <audio controls class="w-full">
@@ -62,11 +62,15 @@
                         <div class="flex justify-between items-center">
                             <p class="truncate">{{ $item->comment }}</p>
                             @if (Auth::user() && (Auth::id() == $item->user->id || Auth::id() == $track->user->id || Auth::user()->is_admin == 1))
-                                <form action={{ route('DeleteComm') }} method="POST" class="hidden">
+                                <form action={{ route('DeleteComm') }} method="POST" class="hidden"
+                                    id="delete_comment_form_{{ $item->id }}">
+                                    @csrf
                                     <input type="text" name="comment_id" id="comment_id" class=""
                                         value={{ $item->id }} class="hidden">
                                 </form>
-                                <x-primary-button type="submit" class="w-min mb-1">Удалить</x-primary-button>
+                                <x-primary-button type="submit" class="w-min mb-1"
+                                    onclick="event.preventDefault();
+                                              document.getElementById('delete_comment_form_{{ $item->id }}').submit();">Удалить</x-primary-button>
                             @endif
                         </div>
                     </div>

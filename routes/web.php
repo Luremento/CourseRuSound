@@ -25,7 +25,8 @@ Route::post('/new_comment/{id}', [CommentController::class, 'new_comment'])->nam
 Route::get('/del_track/{track_id}', [App\Http\Controllers\TrackController::class, 'delete_track'])->name('deleteTrack')->middleware('auth');
 
 Route::post('/new/albom', [MusicController::class, 'New_Albom'])->name('NewAlbom')->middleware('auth');
-Route::get('/del_comment', [CommentController::class, 'delete_comment'])->name('DeleteComm')->middleware('auth');
+
+Route::post('/del_comment', [CommentController::class, 'delete_comment'])->name('DeleteComm')->middleware('auth');
 # НЕ делал еще
 Route::get('/alboms', [AlbomController::class, 'index'])->name('alboms')->middleware('auth');
 Route::get('/albom/{id}', [TrackController::class, 'show_albom'])->name('ShawAlbom');
