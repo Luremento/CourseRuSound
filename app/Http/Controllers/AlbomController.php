@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Albom, Like, Track};
+use App\Models\{Albom, Like, Track, View};
 use Auth;
 
 class AlbomController extends Controller
@@ -46,6 +46,15 @@ class AlbomController extends Controller
         $newTrack = Like::with('track')->where('user_id', Auth::user()->id)->get();
         $albom = Albom::with('user')->where('id', $id)->first();
 
+        if(Auth::check()) {
+            $views = View::where('user_id', Auth::user()->id)->where('albom_id', $id)->first();
+            if (!$views) {
+                View::create([
+                    'user_id' => Auth::user()->id,
+                    'albom_id' => $id
+                ]);
+            }
+        }
         // Проверяем, является ли $track_ids строкой и преобразуем её в массив
         if (is_string($albom->music)) {
             $track_ids = json_decode($albom->music, true); // Предполагаем, что $track_ids хранится как JSON

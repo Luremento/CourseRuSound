@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{MusicController, CommentController,
-    LikeController, AlbomController, ProfileController, HomeController};
+    LikeController, AlbomController, ProfileController, HomeController,
+    AdminController};
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
@@ -17,6 +18,8 @@ Route::get('/profile/{user_id?}', [HomeController::class, 'profile'])->name('pro
 Route::post('/new_music', [MusicController::class, 'New_Music'])->name('NewMusic')->middleware('auth');
 
 Route::get('/track/{id}', [MusicController::class, 'index'])->name('ShawTrack');
+
+Route::get('/stats', [AdminController::class, 'index'])->name('stats');
 
 Route::post('/like', [LikeController::class, 'store'])->name('like.add')->middleware('auth');
 
@@ -35,6 +38,7 @@ Route::controller(App\Http\Controllers\ProfileController::class)->group(function
 });
 
 Route::post('/playlist/new_track', [AlbomController::class, 'new_track_in_albom'])->name('addTrackToPlaylist')->middleware('auth');
+
 Route::get('/playlist/{id}', [AlbomController::class, 'show_albom'])->name('ShawAlbom');
 
 Route::get('/playlist', [AlbomController::class, 'index'])->name('alboms')->middleware('auth');
