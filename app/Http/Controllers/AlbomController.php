@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Albom;
+use App\Models\{Albom, Like};
 use Auth;
 
 class AlbomController extends Controller
@@ -39,19 +39,22 @@ class AlbomController extends Controller
         Albom::where('id', $albom_id)->delete();
         return view('home', ['tracks' => Track::where('user_id', Auth::user()->id)->get(), 'alboms'=>Albom::with(['user'])->where('user_id', Auth::user()->id)->get(), 'user' => $user = Auth::user()]);
     }
+
     public function show_albom($id)
     {
-
         $newTrack = Like::with('track')->where('user_id', Auth::user()->id)->get();
         $albom = Albom::with('user')->where('id', $id)->first();
         $track_ids = $albom->music;
+
         if (!empty($track_ids)){
             $tracks = Track::whereIn('id', $track_ids)->get();
         } else {
-            $tracks = null;
+            $tracks = collect(); // Используем пустую коллекцию, если треков нет
         }
-        return view('showAlbomPage', ['albom' => $albom, 'newTrack' => $newTrack, 'tracks' => $tracks]);
+
+        return view('showAlbom', ['albom' => $albom, 'newTrack' => $newTrack, 'tracks' => $tracks]);
     }
+
     public function new_track_in_albom($albom_id, Request $request)
     {
         $album = Albom::find($albom_id);

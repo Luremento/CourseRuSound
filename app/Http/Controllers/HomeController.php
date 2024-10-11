@@ -17,10 +17,13 @@ class HomeController extends Controller
     {
         $new_tracks = Track::with(['user', 'likes'])->latest('created_at')->take(6)->get();
         $liked = null;
+        $myPlaylists = null;
         if (Auth::check()) {
             $liked = Like::with(['user', 'track'])->where('user_id', Auth::user()->id)->take(5)->get();
+            $myPlaylists = Albom::where('user_id', Auth::id())->get();
         }
-        return view('index', ['liked' => $liked, 'new_tracks' => $new_tracks]);
+        $alboms = Albom::with('user')->latest('created_at')->take(6)->get();
+        return view('index', ['liked' => $liked, 'new_tracks' => $new_tracks, 'alboms' => $alboms, 'myPlaylists' => $myPlaylists]);
     }
 
     public function profile($user_id = null)

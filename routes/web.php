@@ -34,11 +34,11 @@ Route::controller(App\Http\Controllers\ProfileController::class)->group(function
     Route::delete('/profile/destroy','destroy')->name('profile.destroy');
 });
 
+Route::get('/albom/{id}', [AlbomController::class, 'show_albom'])->name('ShawAlbom');
+Route::post('/albom/new_track', [App\Http\Controllers\TrackController::class, 'new_track_in_albom'])->name('NewTrackinAlbom')->middleware('auth');
 # НЕ делал еще
 
 Route::get('/alboms', [AlbomController::class, 'index'])->name('alboms')->middleware('auth');
-Route::get('/albom/{id}', [TrackController::class, 'show_albom'])->name('ShawAlbom');
-Route::post('/albom/new_track/{albom_id}', [App\Http\Controllers\TrackController::class, 'new_track_in_albom'])->name('NewTrackinAlbom')->middleware('auth');
 Route::get('/del_albom/{albom_id}', [App\Http\Controllers\TrackController::class, 'delete_albom'])->name('deleteAlbom')->middleware('auth');
 
 
