@@ -33,12 +33,16 @@ Route::get('/albom/{id}', [TrackController::class, 'show_albom'])->name('ShawAlb
 Route::post('/albom/new_track/{albom_id}', [App\Http\Controllers\TrackController::class, 'new_track_in_albom'])->name('NewTrackinAlbom')->middleware('auth');
 Route::get('/del_albom/{albom_id}', [App\Http\Controllers\TrackController::class, 'delete_albom'])->name('deleteAlbom')->middleware('auth');
 
-Route::put('/new_avatar', [HomeController::class, 'avatar'])->name('NewAvatar')->middleware(['auth']);
 
 Route::post('/search', [HomeController::class, 'search'])->name('search');
 
-Route::patch('/profile/update',  [ProfileController::class ,'update'])->name('profile.update');
-Route::delete('/profile/destroy', [ProfileController::class , 'destroy'])->name('profile.destroy');
+
+
+Route::controller(App\Http\Controllers\ProfileController::class)->group(function () {
+    Route::post('/new_avatar', 'update_avatar')->name('profile.update-photo');
+    Route::patch('/profile/update', 'update')->name('profile.update');
+    Route::delete('/profile/destroy','destroy')->name('profile.destroy');
+});
 
 
 require __DIR__.'/auth.php';

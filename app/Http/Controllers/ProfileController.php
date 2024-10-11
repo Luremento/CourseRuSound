@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
@@ -37,24 +38,25 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
+    public function update_avatar(Request $request) {
+        $validated = $request->validate([
+            'avatar_change' => 'required|image|mimes:jpg,png,jpeg|max:2048'
         ]);
 
-        $user = $request->user();
+        $user = User::where('id', Auth::user()->id)->first();
+        $photoPath = $user->photo;
+        if (file_exists($photoPath)) {
+            unlink($photoPath);
+        }
 
-        Auth::logout();
+        $name = time(). ".". $request->file('avatar_change')->extension();
+        $destination = 'public/avatars';
+        $path = $request->file('avatar_change')->storeAs($destination, $name);
+        User::where('id', Auth::user()->id)->update([
+            'photo' => 'storage/avatars/' . $name
+        ]);
 
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+        return redirect()->back();
     }
+
 }

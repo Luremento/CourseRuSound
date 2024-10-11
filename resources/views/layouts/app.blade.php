@@ -16,7 +16,7 @@
 <body>
     @include('components.header')
     <main class="py-4">
-        <div class="flex flex-wrap justify-center">
+        <div class="w-full flex flex-wrap justify-center">
             @yield('content')
         </div>
     </main>

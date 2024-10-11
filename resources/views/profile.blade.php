@@ -9,9 +9,14 @@
             <div class="col-span-4 sm:col-span-3">
                 <div class="bg-white shadow rounded-lg p-6">
                     <div class="flex flex-col items-center">
-                        <img src={{ asset('img/avatar_default.png') }}
-                            class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
-                        </img>
+                        @if ($user->photo)
+                            <img src={{ asset($user->photo) }} class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
+                            </img>
+                        @else
+                            <img src={{ asset('img/avatar_default.png') }}
+                                class="w-32 h-32 bg-gray-300 rounded-full mb-4 shrink-0">
+                            </img>
+                        @endif
                         <h1 class="text-xl font-bold">{{ $user->name }}</h1>
                         <p class="text-sm font-semibold leading-6 text-gray-900">Регистрация: {{ $user->created_at }}</p>
                     </div>
