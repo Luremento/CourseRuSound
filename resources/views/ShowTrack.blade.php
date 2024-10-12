@@ -30,7 +30,7 @@
                     class="text-md font-bold underline">{{ $track->user->name }}</a>
                 <p class="text-lg font-bold mb-4">Жанр: {{ $track->genre }}</p>
                 @if (Auth::user() && ($track->user_id == Auth::user()->id or Auth::user()->is_admin == 1))
-                    <x-primary-button
+                    <x-primary-button class="w-min"
                         onclick="event.preventDefault();
                                               document.getElementById('delete-track').submit();">Удалить</x-primary-button>
                 @endif
