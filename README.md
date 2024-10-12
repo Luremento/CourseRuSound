@@ -10,7 +10,7 @@
 - Создать файл конфигурации с примера `Copy .env.example .env`
 *Файл .env* <br> - Отредактировать файл конфигурации
 >oauth.yandex.ru <br>
-![image](https://github.com/user-attachments/assets/7eadc153-931c-47d6-a3b6-b0c5c44e175f)
+![image](https://github.com/user-attachments/assets/7d0dc694-737b-4919-b3a5-a47a90d03971)
 
 - Создать ключ приложения `php artisan key:generate`
 - Мигрировать таблицы `php artisan migrate`
