@@ -93,32 +93,22 @@ class AlbomController extends Controller
     }
 
     public function delete_track(Request $request) {
-        // Получаем идентификаторы трека и альбома из запроса
+        $validator = Validator::make($request->all(), [
+            'track_id' => 'required|integer',
+            'albom_id' => 'required|integer',
+        ]);
+
         $trackId = $request->input('track_id');
         $albomId = $request->input('albom_id');
-
-        // Находим альбом по идентификатору
         $albom = Albom::findOrFail($albomId);
-
-        // Получаем текущий список треков в формате JSON
         $tracks = json_decode($albom->music, true);
-
-        // Проверяем, существует ли трек в списке
         if (($key = array_search($trackId, $tracks)) !== false) {
-            // Удаляем трек из списка
             unset($tracks[$key]);
-
-            // Обновляем поле `music` в альбоме
             $albom->music = json_encode(array_values($tracks));
-
-            // Сохраняем изменения в базе данных
             $albom->save();
-
-            // Возвращаем успешный ответ
-            return redirect()->back()->with('success', 'Трек успешно удален из альбома.');
+            return redirect()->back();
         } else {
-            // Возвращаем ошибку, если трек не найден
-            return redirect()->back()->with('error', 'Трек не найден в альбоме.');
+            return redirect()->back();
         }
     }
 }
