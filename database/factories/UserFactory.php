@@ -23,12 +23,25 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // Определяем начало и конец текущего месяца
+        $startOfThisMonth = now()->startOfMonth();
+        $endOfThisMonth = now()->endOfMonth();
+
+        // Определяем начало и конец прошлого месяца
+        $startOfLastMonth = now()->subMonth()->startOfMonth();
+        $endOfLastMonth = now()->subMonth()->endOfMonth();
+
+        // Генерируем случайную дату в диапазоне от начала прошлого месяца до конца текущего месяца
+        $randomDate = fake()->dateTimeBetween($startOfLastMonth, $endOfThisMonth);
+
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'created_at' => $randomDate,
+            'updated_at' => $randomDate, // Обновляем также updated_at, чтобы они совпадали
         ];
     }
 

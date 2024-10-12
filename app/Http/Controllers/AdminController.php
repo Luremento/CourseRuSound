@@ -30,10 +30,14 @@ class AdminController extends Controller
             $percentageChange = $usersLastMonth > 0 ? 100 : 0;
         }
 
+        // Рассчитываем процент "на сколько больше"
+        $percentageIncrease = $usersLastMonth - $usersTwoMonthsAgo;
+
         return view('stats', [
             'all_users' => User::get(),
             'users_lastMonth' => $usersLastMonth,
             'percentage_change' => $percentageChange,
+            'percentage_increase' => $percentageIncrease,
         ]);
     }
 }
