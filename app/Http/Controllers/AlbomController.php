@@ -43,7 +43,7 @@ class AlbomController extends Controller
 
     public function show_albom($id)
     {
-        $newTrack = Like::with('track')->where('user_id', Auth::user()->id)->get();
+        // $newTrack = Like::with('track')->where('user_id', Auth::user()->id)->get();
         $albom = Albom::with('user')->where('id', $id)->first();
 
         if(Auth::check()) {
@@ -68,7 +68,7 @@ class AlbomController extends Controller
             $tracks = collect(); // Используем пустую коллекцию, если треков нет
         }
 
-        return view('showAlbom', ['albom' => $albom, 'newTrack' => $newTrack, 'tracks' => $tracks]);
+        return view('showAlbom', ['albom' => $albom, 'tracks' => $tracks]);
     }
 
     public function new_track_in_albom(Request $request)

@@ -33,6 +33,12 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
+
+    Route::get('/login/yandex', [AuthenticatedSessionController::class, 'RedirectYandex'])
+        ->name('login.yandex');
+
+    Route::get('/login/yandex/callback', [AuthenticatedSessionController::class, 'CallbackYandex'])
+        ->name('login.yandex.call');
 });
 
 Route::middleware('auth')->group(function () {

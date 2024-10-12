@@ -16,11 +16,13 @@
         <!-- Password -->
         <div class="mt-4">
             <x-input-label for="password" :value="__('Пароль')" />
-
             <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
                 autocomplete="current-password" />
-
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+        <!-- Yandex -->
+        <div class="mt-4 w-full flex justify-center">
+            <a href={{ route('login.yandex') }} class="text-center w-full border rounded p-2">Yandex</a>
         </div>
         <div class="flex items-center justify-between mt-4">
             <a href={{ route('register') }} class="block font-medium text-sm text-gray-700 pt-3">Регистрация<span

@@ -89,7 +89,7 @@
                                             </li>
                                         @endforeach
                                     @else
-                                        <li>No playlists available.</li>
+                                        <li class="block px-4 py-2 hover:bg-gray-100">Плейлистов не найдено</li>
                                     @endif
                                 </ul>
                             </div>

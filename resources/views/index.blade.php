@@ -97,7 +97,7 @@
                 <div class="col-span-4 sm:col-span-12">
                     <div class="bg-white shadow rounded-lg p-6">
                         <h2 class="text-xl font-bold mb-4">Новинки</h2>
-                        <div class="grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-5">
+                        <div class="grid grid-cols-4 max-md:grid-cols-2 max-sm:grid-cols-1 gap-5">
                             @foreach ($new_tracks as $track)
                                 @component('components.Card', [
                                     'track' => $track,
@@ -109,7 +109,7 @@
                         </div>
 
                         <h2 class="text-xl font-bold mb-4 mt-4">Альбомы</h2>
-                        <div class="grid grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-5">
+                        <div class="grid grid-cols-4 max-md:grid-cols-2 max-sm:grid-cols-1 gap-5">
                             @foreach ($alboms as $albom)
                                 @component('components.Card', [
                                     'track' => $albom,

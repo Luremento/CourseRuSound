@@ -42,6 +42,7 @@ Route::post('/playlist/new_track', [AlbomController::class, 'new_track_in_albom'
 Route::get('/playlist/{id}', [AlbomController::class, 'show_albom'])->name('ShawAlbom');
 
 Route::get('/playlist', [AlbomController::class, 'index'])->name('alboms')->middleware('auth');
+
 # НЕ делал еще
 
 Route::get('/del_playlist/{albom_id}', [App\Http\Controllers\TrackController::class, 'delete_albom'])->name('deleteAlbom')->middleware('auth');
