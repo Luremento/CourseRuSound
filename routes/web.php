@@ -30,7 +30,7 @@ Route::post('/like', [LikeController::class, 'store'])->name('like.add')->middle
 Route::controller(App\Http\Controllers\AlbomController::class)->group(function () {
     Route::middleware('auth')->group(function () {
         Route::post('/new_comment/{id}', 'new_comment')->name('NewComment');
-        Route::post('/del_comment', 'delete_comment')->name('DeleteComm');
+        Route::delete('/albom/track/delete', 'delete_track')->name('albom.track.delete');
     });
 });
 

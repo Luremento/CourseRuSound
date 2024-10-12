@@ -37,15 +37,27 @@
                             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.5 5A1.5 1.5 0 0 0 5 6.5v3A1.5 1.5 0 0 0 6.5 11h3A1.5 1.5 0 0 0 11 9.5v-3A1.5 1.5 0 0 0 9.5 5h-3z" />
                     </svg>
                 </button>
-                <button id="dropdownDefaultButton-{{ $track->id }}"
-                    class="hover:scale-110 text-white opacity-0 transform translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 transition z-10"
-                    onclick="event.preventDefault(); toggleDropdown('dropdown-{{ $track->id }}')">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
-                        class="bi bi-three-dots" viewBox="0 0 16 16">
-                        <path
-                            d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
-                    </svg>
-                </button>
+                @if (Auth::user())
+                    <button id="dropdownDefaultButton-{{ $track->id }}"
+                        class="hover:scale-110 text-white opacity-0 transform translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 transition z-10"
+                        onclick="event.preventDefault(); toggleDropdown('dropdown-{{ $track->id }}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                            class="bi bi-three-dots" viewBox="0 0 16 16">
+                            <path
+                                d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                        </svg>
+                    </button>
+                @else
+                    <button id="dropdownDefaultButton-{{ $track->id }}"
+                        class="hover:scale-110 invisible text-white opacity-0 transform translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 transition z-10"
+                        onclick="event.preventDefault(); toggleDropdown('dropdown-{{ $track->id }}')">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                            class="bi bi-three-dots" viewBox="0 0 16 16">
+                            <path
+                                d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                        </svg>
+                    </button>
+                @endif
                 <!-- Dropdown menu -->
                 <div id="dropdown-{{ $track->id }}"
                     class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 absolute top-2/4 left-2/3 mt-2">

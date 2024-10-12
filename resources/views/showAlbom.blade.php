@@ -38,7 +38,13 @@
                             </a>
                         </div>
                         <div class="inline-flex items-center text-base font-semibold text-gray-900">
-                            <x-primary-button>Удалить</x-primary-buttin>
+                            <form action="{{ route('albom.track.delete') }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="track_id" value="{{ $track->id }}">
+                                <input type="hidden" name="albom_id" value="{{ $albom->id }}">
+                                <x-primary-button type="submit">Удалить</x-primary-button>
+                            </form>
                         </div>
                     </div>
                 </li>

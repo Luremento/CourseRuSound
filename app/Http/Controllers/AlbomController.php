@@ -55,17 +55,17 @@ class AlbomController extends Controller
                 ]);
             }
         }
-        // Проверяем, является ли $track_ids строкой и преобразуем её в массив
+
         if (is_string($albom->music)) {
-            $track_ids = json_decode($albom->music, true); // Предполагаем, что $track_ids хранится как JSON
+            $track_ids = json_decode($albom->music, true);
         } else {
-            $track_ids = $albom->music; // Если это уже массив или коллекция, просто используем его
+            $track_ids = $albom->music;
         }
 
         if (!empty($track_ids)){
             $tracks = Track::whereIn('id', $track_ids)->get();
         } else {
-            $tracks = collect(); // Используем пустую коллекцию, если треков нет
+            $tracks = collect();
         }
 
         return view('showAlbom', ['albom' => $albom, 'tracks' => $tracks]);
@@ -92,4 +92,33 @@ class AlbomController extends Controller
         return redirect(route('index'));
     }
 
+    public function delete_track(Request $request) {
+        // Получаем идентификаторы трека и альбома из запроса
+        $trackId = $request->input('track_id');
+        $albomId = $request->input('albom_id');
+
+        // Находим альбом по идентификатору
+        $albom = Albom::findOrFail($albomId);
+
+        // Получаем текущий список треков в формате JSON
+        $tracks = json_decode($albom->music, true);
+
+        // Проверяем, существует ли трек в списке
+        if (($key = array_search($trackId, $tracks)) !== false) {
+            // Удаляем трек из списка
+            unset($tracks[$key]);
+
+            // Обновляем поле `music` в альбоме
+            $albom->music = json_encode(array_values($tracks));
+
+            // Сохраняем изменения в базе данных
+            $albom->save();
+
+            // Возвращаем успешный ответ
+            return redirect()->back()->with('success', 'Трек успешно удален из альбома.');
+        } else {
+            // Возвращаем ошибку, если трек не найден
+            return redirect()->back()->with('error', 'Трек не найден в альбоме.');
+        }
+    }
 }
