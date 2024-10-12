@@ -13,6 +13,8 @@ Route::controller(App\Http\Controllers\HomeController::class)->group(function ()
     Route::get('/', 'index')->name('index');
     Route::post('/search', 'search')->name('search');
     Route::get('/profile/{user_id?}', 'profile')->name('profile')->middleware('auth');
+    Route::post('/new_comment/{id}', 'new_comment')->name('NewComment');
+    Route::post('/commtent/delete/', 'delete_comment')->name('DeleteComm');
 });
 
 Route::controller(App\Http\Controllers\MusicController::class)->group(function () {
@@ -29,14 +31,7 @@ Route::post('/like', [LikeController::class, 'store'])->name('like.add')->middle
 
 Route::controller(App\Http\Controllers\AlbomController::class)->group(function () {
     Route::middleware('auth')->group(function () {
-        Route::post('/new_comment/{id}', 'new_comment')->name('NewComment');
         Route::delete('/albom/track/delete', 'delete_track')->name('albom.track.delete');
-    });
-});
-
-// Route::get('/del_playlist/{albom_id}', [App\Http\Controllers\TrackController::class, 'delete_albom'])->name('deleteAlbom')->middleware('auth');
-Route::controller(App\Http\Controllers\AlbomController::class)->group(function () {
-    Route::middleware('auth')->group(function () {
         Route::get('/playlist', 'index')->name('alboms');
         Route::post('/playlist/new_track', 'new_track_in_albom')->name('addTrackToPlaylist');
         Route::post('/new/playlist', 'New_Albom')->name('NewAlbom');

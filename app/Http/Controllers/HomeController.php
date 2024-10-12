@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\{Track, Like, Albom, User, view};
+use App\Models\{Track, Like, Albom,
+    User, View, Comment};
 use Auth;
 
 class HomeController extends Controller
@@ -86,11 +87,12 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
-    public function delete_comment($comment_id)
+    public function delete_comment(Request $request)
     {
-        Comment::where('id', $comment_id)->delete();
+        Comment::where('id', $request->comment_id)->delete();
         return redirect()->back();
     }
+
     public function like($track_id)
     {
         $likes = Like::where('user_id', Auth::user()->id)->where('track_id', $track_id)->first();

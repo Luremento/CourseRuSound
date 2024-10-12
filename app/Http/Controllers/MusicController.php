@@ -76,4 +76,19 @@ class MusicController extends Controller
         Track::where('id', $request->track_id)->delete();
         return redirect(route('index'));
     }
+
+    public function new_comment($id, Request $request)
+    {
+        $validatedData = $request->validate([
+            'comment' => 'required|string',
+        ]);
+
+        $theme = Comment::create([
+            'user_id' => Auth::user()->id,
+            'track_id' => $id,
+            'comment' => $request->comment
+        ]);
+        $theme->save();
+        return redirect()->back();
+    }
 }

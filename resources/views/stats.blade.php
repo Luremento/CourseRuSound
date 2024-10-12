@@ -37,7 +37,5 @@
                 @endslot
             @endcomponent
         </div>
-        @component('components.reg-method-stats')
-        @endcomponent
     </div>
 @endsection
