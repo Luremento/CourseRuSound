@@ -11,6 +11,10 @@ class PasswordUpdateTest extends TestCase
 {
     use RefreshDatabase;
 
+    /**
+     * Тест на успешное обновление пароля.
+     *
+     */
     public function test_password_can_be_updated(): void
     {
         $user = User::factory()->create();
@@ -31,6 +35,10 @@ class PasswordUpdateTest extends TestCase
         $this->assertTrue(Hash::check('new-password', $user->refresh()->password));
     }
 
+    /**
+     * Тест на ошибку валидации при смене пароля.
+     *
+     */
     public function test_correct_password_must_be_provided_to_update_password(): void
     {
         $user = User::factory()->create();

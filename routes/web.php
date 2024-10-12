@@ -15,7 +15,7 @@ Route::get('/upload', function () {
 
 Route::get('/profile/{user_id?}', [HomeController::class, 'profile'])->name('profile')->middleware('auth');
 
-Route::post('/new_music', [MusicController::class, 'New_Music'])->name('NewMusic')->middleware('auth');
+Route::post('/new_track', [MusicController::class, 'New_Music'])->name('NewMusic')->middleware('auth');
 
 Route::get('/track/{id}', [MusicController::class, 'index'])->name('ShawTrack');
 
