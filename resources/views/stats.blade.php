@@ -5,37 +5,172 @@
 
 @section('content')
     <div class="card border rounded-xl mb-4">
-        <h2 class="px-5 pt-3 font-bold">Пользователи</h2>
         <div class="grid grid-cols-1 gap-8 p-5 lg:grid-cols-2 xl:grid-cols-4">
-            @component('components.stats-block', [
-                'name' => 'Всего',
-                'number' => count($all_users),
-                'percent' => 'None',
-            ])
-                @slot('svg')
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        class="w-12 h-12 text-gray-300">
-                        <path
-                            d="M20 18L14 18M11 21H4C4 17.134 7.13401 14 11 14C11.695 14 12.3663 14.1013 13 14.2899M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
-                            stroke="#d1d5db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                @endslot
-            @endcomponent
-
-            @component('components.stats-block', [
-                'name' => 'За последний месяц',
-                'number' => $users_lastMonth,
-                'percent' => $percentage_change,
-            ])
-                @slot('svg')
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                        class="w-12 h-12 text-gray-300">
-                        <path
-                            d="M20 18L14 18M11 21H4C4 17.134 7.13401 14 11 14C11.695 14 12.3663 14.1013 13 14.2899M15 7C15 9.20914 13.2091 11 11 11C8.79086 11 7 9.20914 7 7C7 4.79086 8.79086 3 11 3C13.2091 3 15 4.79086 15 7Z"
-                            stroke="#d1d5db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                @endslot
-            @endcomponent
+            <div>
+                <h2 class="px-5 pt-3 font-bold">Пользователи</h2>
+                <div class="mx-5 mb-3 max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+                    <div class="flex justify-between">
+                        <div>
+                            <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">
+                                {{ $users_lastMonth }}
+                            </h5>
+                            <p class="text-base font-normal text-gray-500 dark:text-gray-400">Пользователей за последний
+                                месяц
+                            </p>
+                        </div>
+                        <div
+                            class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
+                            {{ round($percentage_change, 2) }}%
+                            <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 10 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13V1m0 0L1 5m4-4 4 4" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div id="area-chart"></div>
+                    <div
+                        class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
+                        <div class="flex justify-between items-center pt-5">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h2 class="px-5 pt-3 font-bold">Треки</h2>
+                <div class="mx-5 mb-3 max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+                    <div class="flex justify-between">
+                        <div>
+                            <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">
+                                {{ $tracks_lastMonth }}
+                            </h5>
+                            <p class="text-base font-normal text-gray-500 dark:text-gray-400">Треков за последний
+                                месяц
+                            </p>
+                        </div>
+                        <div
+                            class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
+                            {{ round($tracks_percentage_change, 2) }}%
+                            <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 10 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13V1m0 0L1 5m4-4 4 4" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div id="area-chart"></div>
+                    <div
+                        class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
+                        <div class="flex justify-between items-center pt-5">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h2 class="px-5 pt-3 font-bold">Альбомы</h2>
+                <div class="mx-5 mb-3 max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
+                    <div class="flex justify-between">
+                        <div>
+                            <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">
+                                {{ $albums_lastMonth }}
+                            </h5>
+                            <p class="text-base font-normal text-gray-500 dark:text-gray-400">Альбомов за последний
+                                месяц
+                            </p>
+                        </div>
+                        <div
+                            class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
+                            {{ round($albums_percentage_change, 2) }}%
+                            <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 10 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 13V1m0 0L1 5m4-4 4 4" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div id="area-chart"></div>
+                    <div
+                        class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
+                        <div class="flex justify-between items-center pt-5">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        const userData = @json($userData);
+
+        const options = {
+            chart: {
+                height: "100%",
+                maxWidth: "100%",
+                type: "area",
+                fontFamily: "Inter, sans-serif",
+                dropShadow: {
+                    enabled: false,
+                },
+                toolbar: {
+                    show: false,
+                },
+            },
+            tooltip: {
+                enabled: true,
+                x: {
+                    show: false,
+                },
+            },
+            fill: {
+                type: "gradient",
+                gradient: {
+                    opacityFrom: 0.55,
+                    opacityTo: 0,
+                    shade: "#1C64F2",
+                    gradientToColors: ["#1C64F2"],
+                },
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            stroke: {
+                width: 6,
+            },
+            grid: {
+                show: false,
+                strokeDashArray: 4,
+                padding: {
+                    left: 2,
+                    right: 2,
+                    top: 0
+                },
+            },
+            series: [{
+                name: "New users",
+                data: userData.map(item => item.count),
+                color: "#1A56DB",
+            }],
+            xaxis: {
+                categories: userData.map(item => item.date),
+                labels: {
+                    show: false,
+                },
+                axisBorder: {
+                    show: false,
+                },
+                axisTicks: {
+                    show: false,
+                },
+            },
+            yaxis: {
+                show: false,
+            },
+        }
+
+        if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
+            const chart = new ApexCharts(document.getElementById("area-chart"), options);
+            chart.render();
+        }
+    </script>
 @endsection
