@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{Albom, Like, Track, View};
+use Illuminate\Support\Facades\Validator;
 use Auth;
 
 class AlbomController extends Controller

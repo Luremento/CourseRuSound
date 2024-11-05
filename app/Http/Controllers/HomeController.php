@@ -16,7 +16,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $new_tracks = Track::with(['user', 'likes'])->latest('created_at')->take(6)->get();
+        $new_tracks = Track::with(['user', 'likes'])->latest('created_at')->take(8)->get();
         $liked = null;
         $myPlaylists = null;
         if (Auth::check()) {
@@ -47,6 +47,10 @@ class HomeController extends Controller
             ->toArray();
 
         $popular_tracks = Track::whereIn('id', $popular_track_ids)->get();
+
+        // Проверка на пустоту коллекций
+        $tracks = $tracks->isEmpty() ? null : $tracks;
+        $popular_tracks = $popular_tracks->isEmpty() ? null : $popular_tracks;
 
         return view('profile', [
             'tracks' => $tracks,
