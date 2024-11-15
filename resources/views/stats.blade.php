@@ -22,9 +22,9 @@
                             class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
                             {{ round($percentage_change, 2) }}%
                             <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                 viewBox="0 0 10 14">
+                                viewBox="0 0 10 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 13V1m0 0L1 5m4-4 4 4" />
+                                    d="M5 13V1m0 0L1 5m4-4 4 4" />
                             </svg>
                         </div>
                     </div>
@@ -52,9 +52,9 @@
                             class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
                             {{ round($tracks_percentage_change, 2) }}%
                             <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                 viewBox="0 0 10 14">
+                                viewBox="0 0 10 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 13V1m0 0L1 5m4-4 4 4" />
+                                    d="M5 13V1m0 0L1 5m4-4 4 4" />
                             </svg>
                         </div>
                     </div>
@@ -82,9 +82,9 @@
                             class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
                             {{ round($albums_percentage_change, 2) }}%
                             <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                 viewBox="0 0 10 14">
+                                viewBox="0 0 10 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M5 13V1m0 0L1 5m4-4 4 4" />
+                                    d="M5 13V1m0 0L1 5m4-4 4 4" />
                             </svg>
                         </div>
                     </div>
@@ -96,6 +96,9 @@
                     </div>
                 </div>
             </div>
+            <a href="{{ route('exel') }}">
+                <x-primary-button class="h-min w-min">Отчет</x-primary-button>
+            </a>
         </div>
     </div>
 

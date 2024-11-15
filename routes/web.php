@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{MusicController, CommentController,
     LikeController, AlbomController, ProfileController, HomeController,
     AdminController};
+use App\Http\Middleware\IsAdmin;
 
 Route::get('/upload', function () {
     return view('UploadTrack');
@@ -26,8 +27,12 @@ Route::controller(App\Http\Controllers\MusicController::class)->group(function (
 });
 
 
-Route::get('/stats', [AdminController::class, 'index'])->name('stats');
+Route::get('/stats', [AdminController::class, 'index'])->name('stats')->middleware(IsAdmin::class);
 Route::post('/like', [LikeController::class, 'store'])->name('like.add')->middleware('auth');
+
+Route::middleware(IsAdmin::class)->group(function () {
+    Route::get('/stats/exel', [AdminController::class, 'exel'])->name('exel');
+});
 
 Route::controller(App\Http\Controllers\AlbomController::class)->group(function () {
     Route::middleware('auth')->group(function () {

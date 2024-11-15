@@ -36,9 +36,7 @@
                 @endif
             </div>
             <div class="flex justify-betweene gap-5 w-full">
-                <audio controls class="w-full">
-                    <source src="{{ asset('storage/' . $track->music_file) }}">
-                </audio>
+                <audio controls class="w-full" src="{{ asset('storage/' . $track->music_file) }}" type="audio/mpeg"></audio>
             </div>
             <div class="flex flex-col w-full">
                 <h6 class="border-b pb-2 mb-0 pt-4">Комментарии</h6>
@@ -79,6 +77,23 @@
             </div>
         </div>
     </div>
+    {{-- <script>
+        // Функция для установки трека
+        function setTrack(trackUrl) {
+            // Получаем элемент audio по id
+            const audioPlayer = document.getElementById('audioPlayer');
+
+            // Устанавливаем атрибут src
+            audioPlayer.src = trackUrl;
+
+            // Опционально: можно автоматически начать воспроизведение
+            // audioPlayer.play();
+        }
+
+        // Пример вызова функции с URL трека
+        const trackUrl = "{{ asset('storage/' . $track->music_file) }}";
+        setTrack(trackUrl);
+    </script> --}}
 @endsection
 
 

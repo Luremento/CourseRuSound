@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\{User, Albom, Track};
+use App\Exports\ReportExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -92,5 +94,9 @@ class AdminController extends Controller
             'tracks_percentage_change' => $tracksPercentageChange,
             'trackData' => $trackData,
         ]);
+    }
+
+    public function exel() {
+        return Excel::download(new ReportExport, 'report.xlsx');
     }
 }
