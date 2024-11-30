@@ -68,7 +68,7 @@ class HomeController extends Controller
         $tracks = Track::where('name', 'like', "%{$word}%")->orderBy('id')->get();
         $alboms = Albom::where('name', 'like', "%{$word}%")->orderBy('id')->get();
 
-        return view('index', [
+        return view('search', [
             'tracks' => $tracks,
             'alboms' => $alboms,
         ]);
