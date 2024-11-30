@@ -14,7 +14,6 @@
                         aria-hidden="true">&rarr;</span></a>
             @else
                 <a href={{ route('profile') }} class="text-sm font-semibold leading-6 text-gray-900">Профиль</a>
-
             @endguest
         </div>
     </nav>

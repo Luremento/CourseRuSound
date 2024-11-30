@@ -61,12 +61,17 @@ class HomeController extends Controller
     }
 
 
-    public function search(Request $request) {
-        // Поиск
+    public function search(Request $request)
+    {
         $word = $request->word;
-        $track = Track::where('name', 'like', "%{$word}%")->orderBy('id')->get();
-        $albom = Albom::where('name', 'like', "%{$word}%")->orderBy('id')->get();
-        return view('search', ['track' => $track, 'albom' => $albom]);
+
+        $tracks = Track::where('name', 'like', "%{$word}%")->orderBy('id')->get();
+        $alboms = Albom::where('name', 'like', "%{$word}%")->orderBy('id')->get();
+
+        return view('index', [
+            'tracks' => $tracks,
+            'alboms' => $alboms,
+        ]);
     }
 
     public function show_track($id)
