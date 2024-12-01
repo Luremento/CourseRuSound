@@ -10,6 +10,13 @@ Route::get('/upload', function () {
     return view('UploadTrack');
 })->middleware('auth')->name('track.upload');
 
+Route::controller(App\Http\Controllers\ProfileController::class)->group(function () {
+    Route::post('/new_avatar', 'update_avatar')->name('profile.update-photo');
+    Route::patch('/profile/update', 'update')->name('profile.update');
+    Route::delete('/profile/destroy','destroy')->name('profile.destroy');
+    Route::get('/profile/edit', 'edit')->name('profile.edit')->middleware('auth');
+});
+
 Route::controller(App\Http\Controllers\HomeController::class)->group(function () {
     Route::get('/', 'index')->name('index');
     Route::post('/search', 'search')->name('search');
@@ -44,11 +51,6 @@ Route::controller(App\Http\Controllers\AlbomController::class)->group(function (
     Route::get('/playlist/{id}', 'show_albom')->name('ShawAlbom');
 });
 
-Route::controller(App\Http\Controllers\ProfileController::class)->group(function () {
-    Route::post('/new_avatar', 'update_avatar')->name('profile.update-photo');
-    Route::patch('/profile/update', 'update')->name('profile.update');
-    Route::delete('/profile/destroy','destroy')->name('profile.destroy');
-    Route::get('/profile/edit', 'edit')->name('profile.edit')->middleware('auth');
-});
+
 
 require __DIR__.'/auth.php';

@@ -37,6 +37,7 @@ class HomeController extends Controller
         $alboms = Albom::with(['user'])->where('user_id', $user_id)->get();
         $user = User::where('id', $user_id)->first();
 
+
         // Получаем популярные треки
         $popular_track_ids = View::select('track_id')
             ->where('user_id', $user_id)

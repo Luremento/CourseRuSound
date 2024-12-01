@@ -66,7 +66,7 @@
                         {{-- Карточки --}}
                     </div>
 
-                    <h2 class="text-xl font-bold mb-4 mt-4">Альбомы</h2>
+                    <h2 class="text-xl font-bold mb-4 mt-4">Плейлисты</h2>
 
                     <div class="grid grid-cols-4 max-md:grid-cols-2 max-sm:grid-cols-1 gap-5">
                         {{-- Карточки --}}
