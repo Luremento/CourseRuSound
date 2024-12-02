@@ -46,6 +46,7 @@ Route::controller(App\Http\Controllers\AlbomController::class)->group(function (
         Route::delete('/albom/track/delete', 'delete_track')->name('albom.track.delete');
         Route::get('/playlist', 'index')->name('alboms');
         Route::post('/playlist/new_track', 'new_track_in_albom')->name('addTrackToPlaylist');
+        Route::get('/playlist/delete/{albom_id}', 'albom_delete')->name('deleteAlbom');
         Route::post('/new/playlist', 'New_Albom')->name('NewAlbom');
     });
     Route::get('/playlist/{id}', 'show_albom')->name('ShawAlbom');

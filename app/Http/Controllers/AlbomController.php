@@ -112,4 +112,10 @@ class AlbomController extends Controller
             return redirect()->back();
         }
     }
+
+    public function albom_delete($albom_id) {
+        Albom::where('id', $albom_id)->delete();
+
+        return redirect()->route('index');
+    }
 }

@@ -16,7 +16,7 @@
                 <a href="#" id="play-all-button"
                    class="btn-delete pb-2"><x-primary-button>Слушать</x-primary-button></a>
                 @if (Auth::user() && ($albom->user_id == Auth::user()->id or Auth::user()->is_admin == 1))
-                    <a href="{{ route('deleteTrack', ['track_id' => $albom->id]) }}"
+                    <a href="{{ route('deleteAlbom', ['albom_id' => $albom->id]) }}"
                        class="btn-delete"><x-primary-button>Удалить</x-primary-button></a>
                 @endif
             </div>
