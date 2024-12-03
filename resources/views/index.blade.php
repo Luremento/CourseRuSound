@@ -71,7 +71,7 @@ ruSound
 
                 <div class="flex flex-col items-center">
                     @if (Auth::check())
-                    <p class="text-lg font-semibold">{{ Auth::user()->name }}</p>
+                    <a class="text-lg font-semibold transition duration-300 hover:text-blue-700" href="{{route('profile') }}">{{ Auth::user()->name }}</a>
                     @else
                     <p class="text-lg font-semibold">Гость</p>
                     @endif
