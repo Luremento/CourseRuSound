@@ -8,7 +8,7 @@
                 class="absolute rounded bg-opacity-0 group-hover:bg-opacity-60 w-full h-full top-0 flex items-center group-hover:opacity-100 transition justify-evenly">
                 <button
                     class="hover:scale-110 text-white opacity-0 transform translate-y-3 group-hover:translate-y-0 group-hover:opacity-100 transition z-10"
-                    onclick="event.preventDefault(); likeTrack({{ $track->id }})">
+                    onclick="event.preventDefault();  likeTrack({{ $track->id }})">
                     @if (Auth::user() && count($track->likes) > 0)
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 16 16">
                             <path fill="red"
@@ -154,6 +154,14 @@
 </form>
 
 <script>
+    function likeTrack(trackId) {
+    // Установка значения track_id в скрытой форме
+    document.getElementById('track_id').value = trackId;
+
+    // Отправка формы
+    document.getElementById('liked-form').submit();
+}
+
     function addTrackToPlaylist(trackId, playlistId) {
         // Заполняем скрытые поля формы
         document.getElementById('track_id_for_playlist').value = trackId;
