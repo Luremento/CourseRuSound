@@ -19,17 +19,22 @@
                         <h1 class="text-xl font-bold">{{ $user->name }}</h1>
                         <p class="text-sm font-semibold leading-6 text-gray-900">Регистрация: {{ $user->created_at }}</p>
                     </div>
-                    <div class="mt-6 flex flex-wrap gap-4 justify-center">
-                        <a href="{{ route('profile.edit') }}"
-                            class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Изменить</a>
-                        <a href="#"
-                           class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                           onclick="event.preventDefault();
+
+                    <!-- Условие для отображения кнопок только для владельца профиля -->
+                    @if (Auth::check() && Auth::id() === $user->id)
+                        <div class="mt-6 flex flex-wrap gap-4 justify-center">
+                            <a href="{{ route('profile.edit') }}"
+                                class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Изменить</a>
+                            <a href="#"
+                               class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                               onclick="event.preventDefault();
                                               document.getElementById('logout-form').submit();">Выход</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
-                    </div>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                @csrf
+                            </form>
+                        </div>
+                    @endif
+
                     <hr class="my-6 border-t border-gray-300">
                     <div class="flex flex-col">
                         <span class="text-gray-700 uppercase font-bold tracking-wider mb-2">Популярные треки</span>
@@ -47,6 +52,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Остальная часть страницы остается без изменений -->
             <div class="col-span-4 sm:col-span-9">
                 <div class="bg-white shadow rounded-lg p-6">
                     <h2 class="text-xl font-bold mb-4">Треки</h2>
