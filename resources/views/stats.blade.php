@@ -67,14 +67,14 @@
                 </div>
             </div>
             <div>
-                <h2 class="px-5 pt-3 font-bold">Альбомы</h2>
+                <h2 class="px-5 pt-3 font-bold">Плейлисты</h2>
                 <div class="mx-5 mb-3 max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
                     <div class="flex justify-between">
                         <div>
                             <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">
                                 {{ $albums_lastMonth }}
                             </h5>
-                            <p class="text-base font-normal text-gray-500 dark:text-gray-400">Новых альбомов за последний
+                            <p class="text-base font-normal text-gray-500 dark:text-gray-400">Новых плейлистов за последний
                                 месяц
                             </p>
                         </div>
